@@ -10,6 +10,7 @@ from backend.api.middleware.security_headers import SecurityHeadersMiddleware
 from backend.api.routes.analytics import router as analytics_router
 from backend.api.routes.auth import router as auth_router
 from backend.api.routes.chat import router as chat_router
+from backend.api.routes.health import router as health_router
 from backend.api.routes.upload import router as upload_router
 from backend.api.routes.user import router as user_router
 
@@ -30,6 +31,7 @@ app.include_router(auth_router)
 app.include_router(upload_router)
 app.include_router(analytics_router)
 app.include_router(user_router)
+app.include_router(health_router)
 
 
 @app.get("/")
