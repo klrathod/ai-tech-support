@@ -10,8 +10,11 @@ class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         excluded_paths = [
             "/",
+            "/health",
+            "/health/",
             "/docs",
             "/openapi.json",
+            "/redoc",
             "/auth/login",
         ]
 
@@ -25,7 +28,14 @@ class AuthMiddleware(BaseHTTPMiddleware):
                 )
 
             try:
-                token = auth_header.split(" ")[1]
+                parts = auth_header.split(" ")
+                if len(parts) != 2 or parts[0].lower() != "bearer":
+                    return JSONResponse(
+                        status_code=401,
+                        content={"message": "Invalid authorization header"},
+                    )
+
+                token = parts[1]
 
                 payload = jwt.decode(
                     token,

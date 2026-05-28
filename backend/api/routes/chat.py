@@ -17,3 +17,8 @@ async def chat(payload: ChatRequest) -> ChatResponse:
 @router.post("/rag")
 async def rag_chat(payload: ChatRequest) -> ChatResponse:
     return await chat_controller.rag_chat(payload)
+
+
+@router.post("/temporal")
+async def temporal_chat(payload: ChatRequest):
+    return await chat_controller.temporal_chat(payload.message)
